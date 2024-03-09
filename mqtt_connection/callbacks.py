@@ -1,10 +1,9 @@
-from dotenv import dotenv_values
 from generative.gemini import gemini
 from datetime import datetime
 from mqtt_publisher.publisher import publish
+import os
 
-config = dotenv_values(".env")
-REQ_TOPIC = config["REQ_TOPIC"]
+REQ_TOPIC = os.getenv("REQ_TOPIC")
 
 
 def on_connect(client, userdata, flags, rc):
