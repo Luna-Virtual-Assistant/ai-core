@@ -1,6 +1,6 @@
 import time
 
-from mqtt_client_connection import MqttClientConnection
+from .mqtt_client_connection import MqttClientConnection
 from config import HOST, PORT, CLIENT_NAME, KEEP_ALIVE
 
 def start():
