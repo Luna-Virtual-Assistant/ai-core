@@ -1,14 +1,16 @@
 import time
 
 from .mqtt_client_connection import MqttClientConnection
-from config import HOST, PORT, CLIENT_NAME, KEEP_ALIVE
+from dotenv import dotenv_values
+
+config = dotenv_values(".env")
 
 def start():
     mqtt_client = MqttClientConnection(
-        broker_ip=HOST,
-        port=PORT,
-        client_name=CLIENT_NAME,
-        keep_alive=KEEP_ALIVE
+        broker_ip=config["HOST"],
+        port=int(config["PORT"]),
+        client_name=config["CLIENT_NAME"],
+        keep_alive=int(config["KEEP_ALIVE"])
     )
     mqtt_client.start_connection()
     

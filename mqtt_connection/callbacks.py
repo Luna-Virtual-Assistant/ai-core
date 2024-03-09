@@ -1,4 +1,9 @@
-from config import REQ_TOPIC, RES_TOPIC
+from dotenv import dotenv_values
+from generative.gemini import gemini
+
+config = dotenv_values(".env")
+REQ_TOPIC = config["REQ_TOPIC"]
+
 
 def on_connect(client, userdata, flags, rc):
     if rc == 0:
@@ -13,3 +18,5 @@ def on_subscribe(client, userdata, mid, granted_qos):
     
 def on_message(client, userdata, message):
     print(f"Received message '{message.payload.decode()}' on topic '{message.topic}' with QOS {message.qos}")
+    print(gemini.generate_response(message.payload.decode()))
+    
