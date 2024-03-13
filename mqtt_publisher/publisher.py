@@ -1,6 +1,9 @@
 import os
 import paho.mqtt.client as mqtt
 from datetime import datetime
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 mqtt_client = mqtt.Client(os.getenv("PUBLISHER_NAME"))

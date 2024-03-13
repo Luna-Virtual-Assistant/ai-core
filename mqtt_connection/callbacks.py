@@ -1,7 +1,11 @@
-from generative.gemini import gemini
 from datetime import datetime
 from mqtt_publisher.publisher import publish
 import os
+from generative.gemini import gemini
+from dotenv import load_dotenv
+
+load_dotenv(override=True)
+
 
 REQ_TOPIC = os.getenv("REQ_TOPIC")
 
@@ -21,5 +25,4 @@ def on_message(client, userdata, message):
     print(f"[{datetime.now().strftime('%Y-%m-%d - %H:%M:%S')}] Received a message on topic {message.topic}")
     res = gemini.generate_response(message.payload.decode())
     publish(res)
-    
     
