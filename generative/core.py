@@ -25,7 +25,9 @@ class AI:
         
     def generate_response(self, prompt: str):
         try:  
-            return self.__model.generate_content(f"{self.__persona}\n{prompt}").text
+            res = self.__model.generate_content(f"{self.__persona}\n{prompt}").text
+            print(res)
+            return res 
         except Exception as e:
             print(e)
             return "Desculpe. Pensei errado."
