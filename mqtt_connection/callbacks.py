@@ -1,14 +1,13 @@
 from datetime import datetime
 from mqtt_publisher.publisher import publish
 import os
-from generative.gemini import gemini
 from dotenv import load_dotenv
+from factory import AIFactory
 
 load_dotenv(override=True)
-
+ai = AIFactory().get_ai('gemini')
 
 REQ_TOPIC = os.getenv("REQ_TOPIC")
-
 
 def on_connect(client, userdata, flags, rc):
     if rc == 0:
@@ -24,6 +23,6 @@ def on_subscribe(client, userdata, mid, granted_qos):
 def on_message(client, userdata, message):
     print(f"[{datetime.now().strftime('%Y-%m-%d - %H:%M:%S')}] Received a message on topic {message.topic}")
     print(f"[{datetime.now().strftime('%Y-%m-%d - %H:%M:%S')}] Message payload: {message.payload.decode()}")
-    res = gemini.generate_response(message.payload.decode())
+    res = ai.generate_response(message.payload.decode())
     publish(res)
     
