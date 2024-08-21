@@ -1,4 +1,5 @@
 from datetime import datetime
+import json
 from mqtt_publisher.publisher import publish
 import os
 from dotenv import load_dotenv
@@ -24,5 +25,11 @@ def on_message(client, userdata, message):
     print(f"[{datetime.now().strftime('%Y-%m-%d - %H:%M:%S')}] Received a message on topic {message.topic}")
     print(f"[{datetime.now().strftime('%Y-%m-%d - %H:%M:%S')}] Message payload: {message.payload.decode()}")
     res = ai.generate_response(message.payload.decode())
+    data = {
+        "command": message.payload.decode(),
+        "response": res
+    }
+    stringfied_response = json.dumps(data)
+    publish(text=stringfied_response, topic='/history')
     publish(res)
     
